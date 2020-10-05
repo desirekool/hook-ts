@@ -3,7 +3,6 @@ export default function useDoubleClick(onClick, onDoubleClick) {
   let timeout;
 
   return (event, ...rest) => {
-    // @ts-ignore
     clicks.push(new Date().getTime());
 
     clearTimeout(timeout);
