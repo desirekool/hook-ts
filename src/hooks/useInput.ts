@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 
-export default function useInput(defaultValue) {
+const useInput = (defaultValue?: string) => {
   const [value, setValue] = useState(defaultValue || "");
 
   const onChange = useCallback(event => {
@@ -8,4 +8,5 @@ export default function useInput(defaultValue) {
   });
 
   return [value, onChange, setValue];
-}
+};
+export default useInput;
