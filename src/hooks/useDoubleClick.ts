@@ -1,6 +1,7 @@
+
 export default function useDoubleClick(onClick, onDoubleClick) {
-  let clicks = [];
-  let timeout;
+  let clicks: Array<number> = [];
+  let timeout: ReturnType<typeof setTimeout>;
 
   return (event, ...rest) => {
     clicks.push(new Date().getTime());

@@ -1,10 +1,7 @@
 import { useCallback } from "react";
-interface Props {
-  callback: (event) => void,
-  inputs: any
-};
-const useOnEnter = ({callback, inputs} : Props) => {
-  return useCallback(event => {
+
+const useOnEnter = (callback: (event: React.KeyboardEvent<EventTarget>) => void, inputs: Array<any>) => {
+  return useCallback((event)  => {
     if (event.key === "Enter") {
       event.preventDefault();
       callback(event);
