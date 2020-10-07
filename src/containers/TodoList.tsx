@@ -4,26 +4,30 @@ import useRouter from "use-react-router";
 
 import useInput from "../hooks/useInput";
 import useOnEnter from "../hooks/useOnEnter";
-import useTodos from "../reducers/useTodos";
+import useTodos, {IState} from "../reducers/useTodos";
 import TodoItem from "./TodoItem";
 
 export default function TodoList() {
   const router = useRouter();
 
-  const [todos, { addTodo, deleteTodo, setDone }] = useTodos();
+  const [todos, { addTodo, deleteTodo, setDone }]  = useTodos();
 
   const left = useMemo(() => todos.reduce((p, c) => p + (c.done ? 0 : 1), 0), [
     todos
   ]);
 
   const visibleTodos = useMemo(
-    () =>
-      router.match.params.filter
-        ? todos.filter(i =>
-            router.match.params.filter === "active" ? !i.done : i.done
-          )
-        : todos,
-    [todos, router.match.params.filter]
+      () => {
+        // @ts-ignore
+          const filter : any = router.match.params.filter;
+        return filter
+            ? todos.filter(i =>
+                filter === "active" ? !i.done : i.done
+            )
+            : todos;
+      },
+      // @ts-ignore
+      [todos, router.match.params.filter]
   );
 
   const anyDone = useMemo(() => todos.some(i => i.done), [todos]);
@@ -35,17 +39,19 @@ export default function TodoList() {
     () => {
       visibleTodos.forEach(i => setDone(i.id, !allSelected));
     },
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     [visibleTodos, allSelected]
   );
 
   const onClearCompleted = useCallback(
     () => {
-      todos.forEach(i => {
+      todos.forEach((i: IState) => {
         if (i.done) {
           deleteTodo(i.id);
         }
       });
     },
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     [todos]
   );
 

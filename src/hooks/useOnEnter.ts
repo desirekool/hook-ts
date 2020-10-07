@@ -6,6 +6,6 @@ const useOnEnter = (callback: (event: React.KeyboardEvent<EventTarget>) => void,
       event.preventDefault();
       callback(event);
     }
-  }, inputs);
+  }, [inputs]);
 };
 export default useOnEnter;

@@ -7,12 +7,13 @@ import useTodos from "../reducers/useTodos";
 
 export default function TodoItem({ todo }) {
   const [, { deleteTodo, setLabel, toggleDone }] = useTodos(() => null);
-
   const [editing, setEditing] = useState(false);
-
-  const onDelete = useCallback(() => deleteTodo(todo.id), [todo.id]);
-  const onDone = useCallback(() => toggleDone(todo.id), [todo.id]);
-  const onChange = useCallback(event => setLabel(todo.id, event.target.value), [
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const onDelete = useCallback(() : void=> { deleteTodo(todo.id)}, [todo.id]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const onDone = useCallback(() : void=> toggleDone(todo.id), [todo.id]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const onChange = useCallback((event) : void => setLabel(todo.id, event.target.value), [
     todo.id
   ]);
 
@@ -22,11 +23,12 @@ export default function TodoItem({ todo }) {
       setEditing(false);
       setLabel(todo.id, todo.label.trim());
     },
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     [todo]
   );
 
   const onEnter = useOnEnter(finishedCallback, [todo]);
-  const ref = useRef();
+  const ref = useRef< HTMLInputElement>(null);
   useOnClickOutside(ref, finishedCallback);
 
   return (
